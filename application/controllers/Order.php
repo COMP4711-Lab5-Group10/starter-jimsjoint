@@ -10,13 +10,9 @@
  * ------------------------------------------------------------------------
  */
 class Order extends Application {
-   
 
     function __construct() {
         parent::__construct();
-        
-        $this->load->model('menu');
-        $this->load->model('orders');
     }
 
     // start a new order
@@ -40,10 +36,9 @@ class Order extends Application {
 
         $this->data['pagebody'] = 'show_menu';
         $this->data['order_num'] = $order_num;
-
-        //$this->orders->get($order_num);
-        $this->data['title'] = 'Order # '.$order_num. '( ' .number_format($this->orders->total($order_num), 2). ')';
-        
+        //FIXME
+        $this->data['title'] = "Order # " . $order_num . ' ( ' . 
+            number_format($this->orders->total($order_num), 2) . ')';
         // Make the columns
         $this->data['meals'] = $this->make_column('m');
         $this->data['drinks'] = $this->make_column('d');
@@ -76,12 +71,13 @@ class Order extends Application {
     
     // make a menu ordering column
     function make_column($category) {
-         return $this->menu->some('category', $category);
+        //FIXME
+        return $this->menu->some('category', $category);
     }
 
     // add an item to an order
     function add($order_num, $item) {
-        //FIXME
+        $this->orders->add_item($order_num,$item);
         redirect('/order/display_menu/' . $order_num);
     }
 
